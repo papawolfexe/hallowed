@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PauseMenu : MonoBehaviour
-{
+public class PauseMenu : MonoBehaviour {
     public static bool GameIsPaused = false;
     public GameObject pauseMenuUI;
     public GameObject optionsMenuUI; // Reference to the options menu UI
@@ -20,79 +17,64 @@ public class PauseMenu : MonoBehaviour
         #endif
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(pauseKey))
-        {
-            if (optionsMenuUI.activeSelf)
-            {
+    void Update() {
+        if (Input.GetKeyDown(pauseKey)) {
+            if (optionsMenuUI.activeSelf) {
                 CloseOptionsMenu();
             }
-            else if (GameIsPaused)
-            {
+            else if (GameIsPaused) {
                 Resume();
             }
-            else
-            {
+            else {
                 Pause();
             }
         }
     }
 
-    public void Resume()
-    {
+    public void Resume() {
         pauseMenuUI.SetActive(false);
         GameIsPaused = false;
         EnableMouseLookScript();
     }
 
-    void Pause()
-    {
+    void Pause() {
         pauseMenuUI.SetActive(true);
         DisableMouseLookScript();
         GameIsPaused = true;
     }
 
-    public void LoadMenu()
-    {
+    public void LoadMenu() {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
         GameIsPaused = false;
     }
 
-    public void Quit()
-    {
+    public void Quit() {
         Application.Quit();
         Debug.Log("Player has Quit the game");
     }
 
-    public void OpenOptionsMenu()
-    {
+    public void OpenOptionsMenu() {
         optionsMenuUI.SetActive(true);
         pauseMenuUI.SetActive(false);
     }
 
-    public void CloseOptionsMenu()
-    {
+    public void CloseOptionsMenu() {
         optionsMenuUI.SetActive(false);
         pauseMenuUI.SetActive(true);
     }
 
-    private void EnableMouseLookScript()
-    {
+    void EnableMouseLookScript() {
         MouseLook mouseLookScript = mouseLookScriptObject.GetComponent<MouseLook>();
-        if (mouseLookScript != null)
-        {
+        if (mouseLookScript != null) {
             mouseLookScript.enabled = true;
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
     }
 
-    private void DisableMouseLookScript()
-    {
+    void DisableMouseLookScript() {
         MouseLook mouseLookScript = mouseLookScriptObject.GetComponent<MouseLook>();
-        if (mouseLookScript != null)
-        {
+        if (mouseLookScript != null) {
             mouseLookScript.enabled = false;
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
